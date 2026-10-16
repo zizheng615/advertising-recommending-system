@@ -1,0 +1,99 @@
+{
+  "scale": "mini",
+  "pca": {
+    "n_components": 40,
+    "cumulative_variance": 0.8110330700874329,
+    "orthogonality_error": 1.9882300941153817e-07
+  },
+  "kmeans": {
+    "k": 5,
+    "true_segments": 5,
+    "silhouette": 0.20341117680072784,
+    "ari_vs_true_segment": 0.9948825427148914,
+    "weighted_purity": 0.998,
+    "min_cluster_frac": 0.0965,
+    "clusters": [
+      {
+        "cluster": 0,
+        "n_users": 386,
+        "share": 0.0965,
+        "top_true_segment": 4,
+        "purity": 1.0
+      },
+      {
+        "cluster": 1,
+        "n_users": 1235,
+        "share": 0.30875,
+        "top_true_segment": 0,
+        "purity": 0.9991902834008097
+      },
+      {
+        "cluster": 2,
+        "n_users": 577,
+        "share": 0.14425,
+        "top_true_segment": 3,
+        "purity": 0.9982668977469671
+      },
+      {
+        "cluster": 3,
+        "n_users": 987,
+        "share": 0.24675,
+        "top_true_segment": 1,
+        "purity": 1.0
+      },
+      {
+        "cluster": 4,
+        "n_users": 815,
+        "share": 0.20375,
+        "top_true_segment": 2,
+        "purity": 0.992638036809816
+      }
+    ],
+    "inertia_scores": {
+      "3": 182730.640625,
+      "4": 165166.765625,
+      "5": 151597.828125,
+      "6": 150026.71875,
+      "7": 148734.09375,
+      "8": 147621.21875,
+      "9": 146534.484375,
+      "10": 145281.375,
+      "11": 144689.046875,
+      "12": 144037.6875,
+      "13": 142920.0
+    },
+    "silhouette_scores": {
+      "3": 0.22250007092952728,
+      "4": 0.23476065695285797,
+      "5": 0.20341117680072784,
+      "6": 0.1402936726808548,
+      "7": 0.10791780054569244,
+      "8": 0.08395705372095108,
+      "9": 0.0846167728304863,
+      "10": 0.07997705042362213,
+      "11": 0.0544334352016449,
+      "12": 0.06969477236270905,
+      "13": 0.07921423017978668
+    }
+  },
+  "features": {
+    "profile_columns": 192,
+    "profile_numeric": 84,
+    "profile_categorical": 22,
+    "profile_noise": 60,
+    "profile_redundant": 26,
+    "profile_noise_share": 0.4479166666666667,
+    "model_cat_fields": 56,
+    "model_embedding_rows": 103861,
+    "model_user_dense": 184,
+    "model_item_dense": 4,
+    "model_imp_dense": 12,
+    "model_pca": 40
+  },
+  "leakage": {
+    "n_named_columns": 452,
+    "leaked_columns": [],
+    "leaked": false
+  },
+  "problems": []
+}

@@ -1,0 +1,18 @@
+{
+  "scale": "mini",
+  "n_figures": 9,
+  "figures": [
+    "fig01 数据地基",
+    "fig02 特征与分层",
+    "fig03 分层画像",
+    "fig04 排序消融",
+    "fig05 不平衡处理",
+    "fig06 延迟去偏",
+    "fig07 ZILN",
+    "fig08 智能出价",
+    "fig09 A/B 实验"
+  ],
+  "skipped": [],
+  "dir": "D:\\advertising recommending system\\artifacts\\figures",
+  "problems": []
+}

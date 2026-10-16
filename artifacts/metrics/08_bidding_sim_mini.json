@@ -1,0 +1,355 @@
+{
+  "scale": "mini",
+  "setup": {
+    "n_test": 74455,
+    "n_requests": 200000,
+    "n_valid": 50381,
+    "beta": 0.2559155887319209,
+    "prior_logit_shift": -1.3629076203918977,
+    "alpha_band": [
+      0.05,
+      5.0
+    ],
+    "budget": 50.0,
+    "budget_tension": 3.6,
+    "budget_source": "真实价值的无约束花费（外生，三次仿真共用）",
+    "level_correction": {
+      "p_ctr": 1.0734349155250102,
+      "p_cvr": 1.890099386978807,
+      "p_cvr_dfm": 1.2257266051725735,
+      "ltv": 1.2964099029739018
+    }
+  },
+  "heads_uncalibrated": [
+    {
+      "头": "pCTR",
+      "来源": "DeepFM，已做先验校正",
+      "口径": "y_click（曝光）",
+      "预测均值": 0.048516034625937475,
+      "实际均值": 0.052998455442884965,
+      "相对误差": -0.08457644245459339
+    },
+    {
+      "头": "pCVR",
+      "来源": "DeepFM 的 CVR 头",
+      "口径": "y_conv_w168（点击）",
+      "预测均值": 0.030559835955500603,
+      "实际均值": 0.05752660922453117,
+      "相对误差": -0.4687704287206812
+    },
+    {
+      "头": "P(转化)",
+      "来源": "DFM，一条链路估到底",
+      "口径": "y_conv_w168（曝光）",
+      "预测均值": 0.00216086208820343,
+      "实际均值": 0.0030488214357665706,
+      "相对误差": -0.2912467542855225
+    },
+    {
+      "头": "E[金额]",
+      "来源": "ZILN，π·exp(μ+σ²/2)",
+      "口径": "pay_amount（曝光）",
+      "预测均值": 13.780369710880759,
+      "实际均值": 17.673939973769567,
+      "相对误差": -0.22030007280025699
+    }
+  ],
+  "heads_calibrated": [
+    {
+      "头": "pCTR",
+      "来源": "DeepFM，已做先验校正",
+      "口径": "y_click（曝光）",
+      "预测均值": 0.05207584522299285,
+      "实际均值": 0.052998455442884965,
+      "相对误差": -0.017408247319327774
+    },
+    {
+      "头": "pCVR",
+      "来源": "DeepFM 的 CVR 头",
+      "口径": "y_conv_w168（点击）",
+      "预测均值": 0.05087912082672119,
+      "实际均值": 0.05752660922453117,
+      "相对误差": -0.11555501858043249
+    },
+    {
+      "头": "P(转化)",
+      "来源": "DFM，一条链路估到底",
+      "口径": "y_conv_w168（曝光）",
+      "预测均值": 0.0026486259885132313,
+      "实际均值": 0.0030488214357665706,
+      "相对误差": -0.13126234372355672
+    },
+    {
+      "头": "E[金额]",
+      "来源": "ZILN，π·exp(μ+σ²/2)",
+      "口径": "pay_amount（曝光）",
+      "预测均值": 17.86500775982742,
+      "实际均值": 17.673939973769567,
+      "相对误差": 0.01081070696977715
+    }
+  ],
+  "prior_correction_ablation": {
+    "target": 0.05752660922453117,
+    "p_cvr_raw_mean_on_clicks": 0.030559835955500603,
+    "p_cvr_with_prior_correction": 0.013693099662321566
+  },
+  "identity_check": {
+    "level_factor_c": 2.630284335431882,
+    "alpha_ratio_raw_over_level": 2.6130049619926456,
+    "alpha_ratio_rel_dev": 0.006569393736817863,
+    "saturated_raw": false,
+    "saturated_calibrated": false,
+    "gate_hits_raw": 3,
+    "gate_hits_calibrated": 3,
+    "gate_fired": true,
+    "b4_value_raw": 1521.6295533985194,
+    "b4_value_calibrated": 1639.8903655012548,
+    "rel_gap": 0.0777198443856475,
+    "verdict": "闸门触发：恒等性被硬闸门打破，校准侧占优"
+  },
+  "product_vs_marginal": {
+    "ecpm_bias_raw": 0.8074109618004598,
+    "ecpm_bias_calibrated": 0.5434067908900342
+  },
+  "runs": {
+    "esmm_raw": {
+      "variant": "esmm",
+      "calibrated": false,
+      "spearman_pred_true": 0.4879616088415548,
+      "loglog_elasticity": 0.48339326905200214,
+      "capture_at_buy_frac": 0.29523185854135175,
+      "buy_frac": 0.011940098045799477,
+      "ecpm_aggregate_bias": 0.8074109618004598,
+      "lift_vs_fixed_bid": 7.235929683195618,
+      "ratio_b4_to_oracle": 0.24977593082497518,
+      "policies": {
+        "B0_fixed": {
+          "spend": 49.22214937046468,
+          "overspend_frac": -0.01555701259070645,
+          "expected_value": 184.75504429126124,
+          "roi": 3.7534940398625074,
+          "win_rate": 0.041715,
+          "pacing_rmse": 0.07542191567264438,
+          "gate_hits": 0,
+          "alpha_first": 1.0,
+          "alpha_max_seen": 1.0
+        },
+        "B1_greedy": {
+          "spend": 50.23634377943633,
+          "overspend_frac": 0.004726875588726642,
+          "expected_value": 1226.2750218084848,
+          "roi": 24.41011685071011,
+          "win_rate": 0.0119,
+          "pacing_rmse": 0.1587096325032725,
+          "gate_hits": 15,
+          "alpha_first": 1.0,
+          "alpha_max_seen": 1.0
+        },
+        "B2_lambda_only": {
+          "spend": 48.661059906872886,
+          "overspend_frac": -0.026778801862542282,
+          "expected_value": 1392.0138922397753,
+          "roi": 28.60632084265734,
+          "win_rate": 0.0117,
+          "pacing_rmse": 0.027324779075912076,
+          "gate_hits": 0,
+          "alpha_first": 0.5763394766856875,
+          "alpha_max_seen": 0.5763394766856875
+        },
+        "B3_pid_only": {
+          "spend": 49.83904899270205,
+          "overspend_frac": -0.003219020145959064,
+          "expected_value": 1483.7906947546728,
+          "roi": 29.771649434401226,
+          "win_rate": 0.01194,
+          "pacing_rmse": 0.01615093338747359,
+          "gate_hits": 3,
+          "alpha_first": 0.6298346933177956,
+          "alpha_max_seen": 0.8420617456438153
+        },
+        "B4_lambda_pid": {
+          "spend": 49.85667795746578,
+          "overspend_frac": -0.002866440850684455,
+          "expected_value": 1521.6295533985194,
+          "roi": 30.52007505788226,
+          "win_rate": 0.011945,
+          "pacing_rmse": 0.016199235741398678,
+          "gate_hits": 3,
+          "alpha_first": 0.6298346933177956,
+          "alpha_max_seen": 0.849938441724067
+        },
+        "B5_oracle": {
+          "spend": 49.323183002430255,
+          "overspend_frac": -0.013536339951394893,
+          "expected_value": 6091.978311812465,
+          "roi": 123.5114593377378,
+          "win_rate": 0.01241,
+          "pacing_rmse": 0.01435670078956505,
+          "gate_hits": 0,
+          "alpha_first": 0.08150938202097138,
+          "alpha_max_seen": 0.08150938202097138
+        }
+      }
+    },
+    "esmm_level": {
+      "variant": "esmm",
+      "calibrated": true,
+      "spearman_pred_true": 0.48797664527896867,
+      "loglog_elasticity": 0.4836494839819783,
+      "capture_at_buy_frac": 0.2986439063823643,
+      "buy_frac": 0.012007252702974952,
+      "ecpm_aggregate_bias": 0.5434067908900342,
+      "lift_vs_fixed_bid": 7.876024856544717,
+      "ratio_b4_to_oracle": 0.26918847729997253,
+      "policies": {
+        "B0_fixed": {
+          "spend": 49.22214937046468,
+          "overspend_frac": -0.01555701259070645,
+          "expected_value": 184.75504429126124,
+          "roi": 3.7534940398625074,
+          "win_rate": 0.041715,
+          "pacing_rmse": 0.07542191567264438,
+          "gate_hits": 0,
+          "alpha_first": 1.0,
+          "alpha_max_seen": 1.0
+        },
+        "B1_greedy": {
+          "spend": 50.31942253526956,
+          "overspend_frac": 0.006388450705391193,
+          "expected_value": 598.7374663083359,
+          "roi": 11.898734845151944,
+          "win_rate": 0.011715,
+          "pacing_rmse": 0.3375755373077374,
+          "gate_hits": 29,
+          "alpha_first": 1.0,
+          "alpha_max_seen": 1.0
+        },
+        "B2_lambda_only": {
+          "spend": 48.72590179973505,
+          "overspend_frac": -0.025481964005299035,
+          "expected_value": 1397.2994407669175,
+          "roi": 28.676728170365344,
+          "win_rate": 0.011785,
+          "pacing_rmse": 0.026474925308792953,
+          "gate_hits": 0,
+          "alpha_first": 0.22759917901958454,
+          "alpha_max_seen": 0.22759917901958454
+        },
+        "B3_pid_only": {
+          "spend": 49.8667637525842,
+          "overspend_frac": -0.0026647249483160353,
+          "expected_value": 1640.8798625106058,
+          "roi": 32.90528077281879,
+          "win_rate": 0.012005,
+          "pacing_rmse": 0.01561378914251968,
+          "gate_hits": 3,
+          "alpha_first": 0.24872469250507262,
+          "alpha_max_seen": 0.3257702056727281
+        },
+        "B4_lambda_pid": {
+          "spend": 49.870551998890974,
+          "overspend_frac": -0.002588960022180515,
+          "expected_value": 1639.8903655012548,
+          "roi": 32.882939926907625,
+          "win_rate": 0.012005,
+          "pacing_rmse": 0.01539790097124697,
+          "gate_hits": 3,
+          "alpha_first": 0.24872469250507262,
+          "alpha_max_seen": 0.32527241780509836
+        },
+        "B5_oracle": {
+          "spend": 49.323183002430255,
+          "overspend_frac": -0.013536339951394893,
+          "expected_value": 6091.978311812465,
+          "roi": 123.5114593377378,
+          "win_rate": 0.01241,
+          "pacing_rmse": 0.01435670078956505,
+          "gate_hits": 0,
+          "alpha_first": 0.08150938202097138,
+          "alpha_max_seen": 0.08150938202097138
+        }
+      }
+    },
+    "dfm_raw": {
+      "variant": "dfm",
+      "calibrated": false,
+      "spearman_pred_true": 0.3825890761173343,
+      "loglog_elasticity": 0.794306953660084,
+      "capture_at_buy_frac": 0.3941077621001603,
+      "buy_frac": 0.014075616143979584,
+      "ecpm_aggregate_bias": 0.7259715212447044,
+      "lift_vs_fixed_bid": 14.233041622262885,
+      "ratio_b4_to_oracle": 0.46198150018930056,
+      "policies": {
+        "B0_fixed": {
+          "spend": 49.22214937046468,
+          "overspend_frac": -0.01555701259070645,
+          "expected_value": 184.75504429126124,
+          "roi": 3.7534940398625074,
+          "win_rate": 0.041715,
+          "pacing_rmse": 0.07542191567264438,
+          "gate_hits": 0,
+          "alpha_first": 1.0,
+          "alpha_max_seen": 1.0
+        },
+        "B1_greedy": {
+          "spend": 50.02766304465875,
+          "overspend_frac": 0.000553260893175036,
+          "expected_value": 815.2324140496856,
+          "roi": 16.29563254477714,
+          "win_rate": 0.01289,
+          "pacing_rmse": 0.5510912408531101,
+          "gate_hits": 48,
+          "alpha_first": 1.0,
+          "alpha_max_seen": 1.0
+        },
+        "B2_lambda_only": {
+          "spend": 49.26977981917292,
+          "overspend_frac": -0.014604403616541646,
+          "expected_value": 2782.2934381170144,
+          "roi": 56.47058802228112,
+          "win_rate": 0.01391,
+          "pacing_rmse": 0.005316045482169942,
+          "gate_hits": 0,
+          "alpha_first": 0.16878197092688785,
+          "alpha_max_seen": 0.16928453038029942
+        },
+        "B3_pid_only": {
+          "spend": 49.71278849878115,
+          "overspend_frac": -0.005744230024376975,
+          "expected_value": 2814.1539393327275,
+          "roi": 56.60824959359752,
+          "win_rate": 0.014075,
+          "pacing_rmse": 0.014000038580751798,
+          "gate_hits": 1,
+          "alpha_first": 0.18444813377634353,
+          "alpha_max_seen": 0.18444813377634353
+        },
+        "B4_lambda_pid": {
+          "spend": 49.69204682845283,
+          "overspend_frac": -0.006159063430943377,
+          "expected_value": 2814.3812796118054,
+          "roi": 56.63645309937883,
+          "win_rate": 0.014075,
+          "pacing_rmse": 0.013553962185000884,
+          "gate_hits": 1,
+          "alpha_first": 0.18444813377634353,
+          "alpha_max_seen": 0.18444813377634353
+        },
+        "B5_oracle": {
+          "spend": 49.323183002430255,
+          "overspend_frac": -0.013536339951394893,
+          "expected_value": 6091.978311812465,
+          "roi": 123.5114593377378,
+          "win_rate": 0.01241,
+          "pacing_rmse": 0.01435670078956505,
+          "gate_hits": 0,
+          "alpha_first": 0.08150938202097138,
+          "alpha_max_seen": 0.08150938202097138
+        }
+      }
+    }
+  },
+  "best_variant": "dfm_raw",
+  "problems": []
+}

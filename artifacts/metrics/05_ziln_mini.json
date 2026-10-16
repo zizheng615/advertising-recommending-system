@@ -1,0 +1,33 @@
+{
+  "scale": "mini",
+  "train": {
+    "n_train": 3000,
+    "n_valid": 1000,
+    "epochs": 60,
+    "batch": 256,
+    "steps": 720,
+    "loss_first": 7.763659258683522,
+    "loss_last": 0.9908569902181625
+  },
+  "sigma": {
+    "min": 0.3274366557598114,
+    "max": 1.3020027875900269,
+    "std": 0.16388440980032984,
+    "mean": 0.4964205095767975,
+    "true_sigma": 0.7,
+    "ratio_to_true": 0.772163938585814
+  },
+  "metrics": {
+    "auc_pay": 0.6332486044657097,
+    "auc_oracle": 0.7542862838915471,
+    "pit_assumption_pvalue": 0.5498691960562001,
+    "pit_model_pvalue": 0.005899712613390395,
+    "n_positives": 88,
+    "normalized_gini": 0.9127383619886622,
+    "log_mae_skill": 0.367771986802948,
+    "aggregate_bias": 0.27835109758521376,
+    "aggregate_bias_without_sigma2": 0.558683702486024,
+    "noise_floor": 0.1604517785844575
+  },
+  "problems": []
+}

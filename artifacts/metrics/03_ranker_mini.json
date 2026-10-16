@@ -1,0 +1,99 @@
+{
+  "scale": "mini",
+  "downsample": {
+    "beta": 0.2559155887319209,
+    "prior_logit_shift": -1.3629076203918977,
+    "pos_rate_before": 0.04869096248055705,
+    "pos_rate_after": 0.16666666666666666,
+    "n_train_rows": 80388
+  },
+  "ablation": [
+    {
+      "variant": "lr",
+      "epochs_run": 16,
+      "best_valid_auc": 0.8202357735305684,
+      "auc_ctr": 0.8220192083287594,
+      "auc_cvr": 0.8113948714351096,
+      "auc_ctcvr": 0.9184452003322391,
+      "mean_p_ctr_raw": 0.13923944532871246,
+      "mean_p_ctr_corrected": 0.04712789288935225,
+      "ece_ctr": 0.006892239392810252
+    },
+    {
+      "variant": "fm",
+      "epochs_run": 16,
+      "best_valid_auc": 0.8725364418704007,
+      "auc_ctr": 0.8732286304852949,
+      "auc_cvr": 0.7366812486011032,
+      "auc_ctcvr": 0.8866420540533789,
+      "mean_p_ctr_raw": 0.11954013258218765,
+      "mean_p_ctr_corrected": 0.05176922556874768,
+      "ece_ctr": 0.010607982869798704
+    },
+    {
+      "variant": "deepfm",
+      "epochs_run": 12,
+      "best_valid_auc": 0.8884602272847917,
+      "auc_ctr": 0.8892838935582894,
+      "auc_cvr": 0.7738541155129735,
+      "auc_ctcvr": 0.9127256821205012,
+      "mean_p_ctr_raw": 0.10816505551338196,
+      "mean_p_ctr_corrected": 0.048666909234191966,
+      "ece_ctr": 0.009566009429988281
+    }
+  ],
+  "smote": {
+    "n_train_after_downsample": 80388,
+    "pos_rate_after_downsample": 0.16666666666666666,
+    "smote": {
+      "pos_rate_before": 0.16628333333333334,
+      "pos_rate_after": 0.28515083527444735,
+      "n_before": 60000,
+      "n_after": 69977,
+      "n_synthetic": 9977
+    },
+    "sampled_rows": 60000
+  },
+  "debias": {
+    "ref_rate_w168": 0.002955878112083053,
+    "online_rate": 0.0022589637604537153,
+    "false_negative_frac": 0.2357723577235772,
+    "elapsed_range_train": [
+      121.0,
+      168.0
+    ],
+    "elapsed_range_eval": [
+      1.0,
+      120.0
+    ],
+    "extrapolated_frac": 1.0,
+    "models": [
+      {
+        "model": "vanilla（elapsed 恒 0，普通 BCE）",
+        "mean_p": 0.0017568847397342324,
+        "bias_vs_w168": -0.4056301805705619,
+        "auc_vs_w168": 0.9089595651032153,
+        "mean_p_clicks": 0.006979343481361866,
+        "bias_clicks": -0.8753553562542691
+      },
+      {
+        "model": "elapsed-as-feature（廿行廉价版）",
+        "mean_p": 0.029199402779340744,
+        "bias_vs_w168": 8.878419093121359,
+        "auc_vs_w168": 0.9115962714336424,
+        "mean_p_clicks": 0.09411811828613281,
+        "bias_clicks": 0.6808628712889302
+      },
+      {
+        "model": "DFM（本方案）",
+        "mean_p": 0.0022168017458170652,
+        "bias_vs_w168": -0.2500361443338234,
+        "auc_vs_w168": 0.917541633296735,
+        "mean_p_clicks": 0.010917292907834053,
+        "bias_clicks": -0.805027207960362
+      }
+    ],
+    "dfm_epochs": 12
+  },
+  "problems": []
+}

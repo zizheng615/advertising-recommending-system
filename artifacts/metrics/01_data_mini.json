@@ -1,0 +1,96 @@
+{
+  "scale": "mini",
+  "n_users": 4000,
+  "n_items": 400,
+  "n_impressions": 400000,
+  "ctr": 0.04997,
+  "cvr": 0.05843506103662197,
+  "cvr_online": 0.043726235741444866,
+  "false_negative_gap": 0.25171232876712335,
+  "target_ctr": 0.05,
+  "target_cvr": 0.06,
+  "false_negative": [
+    {
+      "window_h": 6,
+      "positives": 757,
+      "fn_rate": 0.3518835616438356,
+      "kept": 0.6481164383561644
+    },
+    {
+      "window_h": 24,
+      "positives": 882,
+      "fn_rate": 0.24486301369863014,
+      "kept": 0.7551369863013698
+    },
+    {
+      "window_h": 72,
+      "positives": 1066,
+      "fn_rate": 0.08732876712328767,
+      "kept": 0.9126712328767124
+    },
+    {
+      "window_h": 168,
+      "positives": 1135,
+      "fn_rate": 0.028253424657534245,
+      "kept": 0.9717465753424658
+    },
+    {
+      "window_h": "online",
+      "positives": 874,
+      "fn_rate": 0.2517123287671233,
+      "kept": 0.7482876712328768
+    }
+  ],
+  "delay": {
+    "n_conversions": 1168,
+    "median_h": 0.8488402366638184,
+    "p90_h": 65.2186508178711,
+    "p99_h": 239.67279052734375,
+    "frac_within_1h": 0.509417808219178,
+    "frac_beyond_24h": 0.24486301369863014
+  },
+  "leakage": {
+    "oracle_columns": [
+      "_true_logit_ctr",
+      "_true_logit_cvr",
+      "_true_p_ctr",
+      "_true_p_cvr",
+      "_true_delay_h",
+      "_true_y_conv"
+    ],
+    "n_features_scanned": 10,
+    "max_abs_corr_with_true_logit": 0.20420739335244767,
+    "max_corr_column": "time_slot",
+    "leaked": false
+  },
+  "splits": [
+    {
+      "split": "train",
+      "n": 275164,
+      "n_click": 13398,
+      "n_conv": 592,
+      "ctr": 0.04869096248055705,
+      "cvr": 0.04418569935811315,
+      "ctcvr": 0.002151444229623061
+    },
+    {
+      "split": "valid",
+      "n": 50381,
+      "n_click": 2644,
+      "n_conv": 108,
+      "ctr": 0.052480101625612834,
+      "cvr": 0.04084720121028744,
+      "ctcvr": 0.0021436652706377404
+    },
+    {
+      "split": "test",
+      "n": 74455,
+      "n_click": 3946,
+      "n_conv": 174,
+      "ctr": 0.052998455442884965,
+      "cvr": 0.04409528636594019,
+      "ctcvr": 0.002336982069706534
+    }
+  ],
+  "problems": []
+}

@@ -1,0 +1,44 @@
+{
+  "scale": "mini",
+  "train": {
+    "n_pairs": 13398,
+    "n_neg": 5,
+    "epochs": 6,
+    "loss_first": 1.6733171599251884,
+    "loss_last": 1.3978087135723658,
+    "temperature": 0.07327321171760559
+  },
+  "structure": {
+    "n_user_fields": 22,
+    "leaked_cross_columns": [],
+    "user_norm_err": 1.1920928955078125e-07,
+    "item_norm_err": 1.1920928955078125e-07,
+    "tower_dim": 32
+  },
+  "recall": {
+    "k": 50,
+    "n_items": 400,
+    "per_split": [
+      {
+        "split": "train",
+        "n_pairs": 13160,
+        "recall@50": 0.39300911854103343,
+        "random": 0.125
+      },
+      {
+        "split": "valid",
+        "n_pairs": 2635,
+        "recall@50": 0.3574952561669829,
+        "random": 0.125
+      },
+      {
+        "split": "test",
+        "n_pairs": 3934,
+        "recall@50": 0.34544992374173866,
+        "random": 0.125
+      }
+    ],
+    "popularity_baseline": 0.3335863377609108
+  },
+  "problems": []
+}
