@@ -188,9 +188,19 @@ def main() -> int:
     #
     # ⚠️ 一开始我只做了 ②，p = 0.006，看着像「对数正态假设不成立、
     #    ZILN 从根上就是错的」。换成真实参数后 p 直接到 0.55 ——
-    #    **假设完全成立，是 σ̂ 估小了**（实测 σ̂ 均值约 0.39，
-    #    真实值 0.70）。把校准误差当成前提不成立，是最容易得出
+    #    **假设完全成立，是 σ̂ 估小了**（实测 σ̂ 均值 0.5405，
+    #    真实值 0.70，比值 0.772）。把校准误差当成前提不成立，是最容易得出
     #    反向结论的一步，所以这里两个都算、两个都报，门槛只压在 ① 上。
+    #
+    # ⚠️ σ̂ 有**两个口径**，别混：σ 是「付费金额」这一头的尺度参数，
+    #    而付费用户只占 10%，所以
+    #        全体验证样本（含 90% 的 0）     mean_all = 0.4964
+    #        只取付费用户（y > 0）           mean_pos = 0.5405 ← 「估得准不准」看这个
+    #    拿 mean_all 去跟真实 σ=0.70 比会得出 0.709，与「偏小到 0.772」
+    #    的结论方向一致但数值对不上 —— 因为分母是对的、分子换了对象。
+    #    这条踩过：两个数一度以 ``mean`` / ``ratio_to_true`` 并排写进
+    #    metrics json，看起来像一对，实际是两个口径，连 fig07 都
+    #    照着画错（柱子画 0.4964、标注写 0.77 倍）。现在键名自带口径。
     #   ① 用**全表**的付费用户，不用验证折 —— 生成器的分布假设跟
     #      训练/验证怎么切没有任何关系，用满样本能把 KS 的统计功效
     #      从 88 个样本提到 352 个（388→88 会让 p 值纯靠抖动，
@@ -213,12 +223,14 @@ def main() -> int:
              else "前提不成立 ❌（生成器的金额分布实现有问题）")
     log.info("② 用**模型参数**：p = %.4f。这一步检验的是 μ̂/σ̂ 估得准不准，"
              "**不是**前提是否成立", pit_model)
-    log.info("σ̂ 均值 %.4f，真实值 %.4f，比值 %.2f —— "
+    log.info("σ̂ 均值 %.4f（**付费样本口径**，全体验证样本口径是 %.4f），"
+             "真实值 %.4f，比值 %.2f —— "
              "σ̂ 系统性偏小（是 %d 个用户级样本下这一头的已知短板，"
              "README 里如实记录）；σ̂ 偏小会放大 NLL 里的 "
-             "(ln y − μ̂)²/2σ̂² 项",
-             float(sigma[pos].mean()), cfg.ltv_sigma, sigma_ratio,
-             len(tr_idx))
+             "(ln y − μ̂)²/2σ̂² 项。**只有付费口径能跟真实 σ 比** —— "
+             "σ 描述的是 y>0 那一支的尺度",
+             float(sigma[pos].mean()), float(sigma.mean()),
+             cfg.ltv_sigma, sigma_ratio, len(tr_idx))
 
     # ---------------- 聚合偏差：这一步的核心 ----------------
     # 参照系的选择决定了这个数有没有意义，选错了就是白算：
@@ -294,11 +306,20 @@ def main() -> int:
                   "epochs": ZILN_EPOCHS, "batch": ZILN_BATCH,
                   "steps": int(n_steps),
                   "loss_first": losses[0], "loss_last": losses[-1]},
+        # ⚠️ σ̂ 两个口径**必须分开存、键名自带口径**。
+        #    原先只有 ``mean``（全体，含 90% 的 y=0）和 ``ratio_to_true``
+        #    （只有付费样本）两个键并排 —— 名字看着是一对，实际是两个
+        #    总体，于是 json 自己跟自己矛盾（0.4964 配 0.772，而
+        #    0.4964/0.70 = 0.709）。fig07 照着画就画错了：柱子 0.4964、
+        #    标注「是真实值的 0.77 倍」。
+        #    比值只能配**付费口径** —— σ 是 y>0 那一支的尺度参数。
         "sigma": {"min": float(sigma.min()), "max": float(sigma.max()),
                   "std": float(sigma.std()),
-                  "mean": float(sigma.mean()),
+                  "mean_all": float(sigma.mean()),
+                  "mean_pos": float(sigma[pos].mean()),
                   "true_sigma": float(cfg.ltv_sigma),
-                  "ratio_to_true": sigma_ratio},
+                  "ratio_pos_to_true": sigma_ratio,
+                  "ratio_all_to_true": float(sigma.mean() / cfg.ltv_sigma)},
         "metrics": {"auc_pay": auc_pay, "auc_oracle": auc_oracle,
                     "pit_assumption_pvalue": pit_assumption,
                     "pit_model_pvalue": pit_model,

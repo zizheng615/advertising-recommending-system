@@ -355,10 +355,16 @@ def fig07(d, cfg) -> str | None:
         return None
     sg, m = d["sigma"], d["metrics"]
     fig, ax = plt.subplots(1, 3, figsize=(13.5, 3.9))
-    _bar(ax[0], ["σ 估计均值", "真实 σ"], [sg["mean"], sg["true_sigma"]],
+    # ⚠️ 这里画 **mean_pos**（付费样本口径），不画 mean_all。
+    #    σ 是「付费金额」那一支的尺度参数，只有 y>0 的样本在估它；
+    #    全体验证样本里有 90% 是 y=0，把它们平均进来会把 σ̄ 拉到 0.4964，
+    #    跟真实 0.70 一比是 0.709 —— 而标注引的是比值 0.772，**柱子跟
+    #    标注对不上**。两个口径都在 json 里（mean_all / mean_pos），
+    #    图只画能跟真实 σ 比的那一个。
+    _bar(ax[0], ["σ 估计均值\n(付费口径)", "真实 σ"], [sg["mean_pos"], sg["true_sigma"]],
          [C["b"], C["g"]], f"σ 头是活的（std {sg['std']:.4f}，"
          f"范围 [{sg['min']:.3f}, {sg['max']:.3f}]）\n"
-         f"σ 估计系统性偏小：是真实值的 {sg['ratio_to_true']:.2f} 倍（已知短板）",
+         f"σ 估计系统性偏小：是真实值的 {sg['ratio_pos_to_true']:.2f} 倍（已知短板）",
          "σ", "{:.3f}")
 
     # 两个 PIT 的 p 值：同一个统计量、两个完全不同的问题
